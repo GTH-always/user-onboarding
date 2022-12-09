@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserDetails(c *gin.Context) {
+func CreateUser(c *gin.Context) {
 	defer sentry.Recover()
 	span := sentry.StartSpan(context.TODO(), "[GIN] UserDetails", sentry.TransactionName("Create a new user"))
 	defer span.Finish()

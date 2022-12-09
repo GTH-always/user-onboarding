@@ -72,7 +72,6 @@ func FetchUser(ctx context.Context, request *structs.UserDetails, sentryCtx cont
 	svc := dynamodb.New(dynamo.AwsSession())
 
 	dbSpan1 := sentry.StartSpan(span.Context(), "[DB] Check if user data is present")
-	fmt.Println(request.Email)
 	email := structs.UserDetails{
 		Email: request.Email,
 	}
@@ -87,7 +86,6 @@ func FetchUser(ctx context.Context, request *structs.UserDetails, sentryCtx cont
 		Key:       key,
 		TableName: aws.String(config.Get().Table),
 	}
-	fmt.Println(request.Email)
 	result, err := svc.GetItem(input)
 
 	dbSpan1.Finish() //noting time of query
@@ -96,4 +94,48 @@ func FetchUser(ctx context.Context, request *structs.UserDetails, sentryCtx cont
 	}
 
 	return result.Item, err
+}
+
+func UserLogin(ctx context.Context, request *structs.UserDetails, sentryCtx context.Context) error {
+	defer sentry.Recover()
+	span := sentry.StartSpan(sentryCtx, "[DAO] Userlogin") //sentry to log db calls
+	defer span.Finish()
+	svc := dynamodb.New(dynamo.AwsSession())
+
+	dbSpan1 := sentry.StartSpan(span.Context(), "[DB] User login")
+	email := structs.UserDetails{
+		Email: request.Email,
+	}
+
+	key, err := dynamodbattribute.MarshalMap(email)
+
+	if err != nil {
+		return err
+	}
+	input := &dynamodb.GetItemInput{
+		Key:       key,
+		TableName: aws.String(config.Get().Table),
+	}
+	result, err := svc.GetItem(input)
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	userPassword := ""
+
+	for key, v := range result.Item {
+		if key == "password" {
+			userPassword = *v.S
+			break
+		}
+	}
+	dbSpan1.Finish() //noting time of query
+	err = bcrypt.CompareHashAndPassword([]byte(userPassword), []byte(request.Password))
+
+	if err != nil {
+		return err
+	}
+	return err
 }

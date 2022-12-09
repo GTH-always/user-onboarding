@@ -14,8 +14,8 @@ func v1Routes(route *gin.RouterGroup) {
 
 	v1Routes := route.Group("/v1")
 	{
-		v1Routes.POST("/login", POST.UserDetails)
-		v1Routes.POST("/createUser", POST.UserDetails)
+		v1Routes.POST("/login", POST.UserLogin)
+		v1Routes.POST("/createUser", POST.CreateUser)
 		v1Routes.POST("/fetchUserName", POST.FetchUser)
 	}
 }
