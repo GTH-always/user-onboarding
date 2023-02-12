@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"user-onboarding/constants"
 	helpers "user-onboarding/helpers/userAction"
-	structs "user-onboarding/struct"
+	requestStruct "user-onboarding/struct/request"
 	response "user-onboarding/struct/response"
 	"user-onboarding/utils"
 
@@ -18,7 +18,7 @@ func UserLogin(c *gin.Context) {
 	span := sentry.StartSpan(context.TODO(), "[GIN] UserDetails", sentry.TransactionName("Create a new user"))
 	defer span.Finish()
 
-	formRequest := structs.UserDetails{}
+	formRequest := requestStruct.UserLogin{}
 
 	if err := c.ShouldBind(&formRequest); err != nil {
 		span.Status = sentry.SpanStatusFailedPrecondition

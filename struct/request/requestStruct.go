@@ -1,10 +1,10 @@
 package requestStruct
 
 type GetUserDetailsRequest struct {
-	HandleName string `json:"handleName"`
+	Email string `json:"handleName"`
 }
 
 type UserLogin struct {
-	Password   string `json:"password"`
-	HandleName string `json:"handleName"`
+	Password string `json:"password" binding:"required"`
+	Email    string `json:"email" binding:"required"`
 }

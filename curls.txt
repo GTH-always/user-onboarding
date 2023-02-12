@@ -20,3 +20,14 @@ curl --location --request POST 'localhost:3001/api/v1/fetchUserName' \
     "handlename":"Sdsd",
     "email":"userIdsx"
 }'
+
+user login
+curl --location --request POST 'localhost:3001/api/v1/login' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: Cookie_1=value; jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMjE4ZmIyZjAyMGYyOGU0NmZkOTFlZiIsImVtYWlsIjoic2hpdmFtLmpoYUBzbWFsbGNhc2UuY29tIiwibmFtZSI6IlNoaXZhbSBTb3VyYXYgSmhhIiwidHlwZSI6ImFkbWluIiwiaXNNYW5hZ2VyIjp0cnVlLCJzY29wZXMiOlsiTGVwcmVjaGF1biIsIkxlYWRHZW4iLCJTdXBwb3J0IiwiUHVibGlzaGVyIiwiSW50ZXJuYWxVc2VycyIsIkV4dGVybmFsIiwiR2F0ZXdheSIsIkJyb2tlciJdLCJpYXQiOjE2NzA0MTAzNjEsImV4cCI6MTY3MTAxNTE2MX0.Olvp-Fcw-etYkdCzysGfNlDW06KGY9I2-efbwdkz3Jw' \
+--data-raw '{
+    "firstName":"shivam",
+    "handlename":"Sdsd",
+    "email":"userIdsx",
+    "password":"dassdas"
+}'

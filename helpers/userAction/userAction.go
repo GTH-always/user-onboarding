@@ -6,6 +6,7 @@ import (
 	"user-onboarding/config"
 	dynamo "user-onboarding/services/s3Bucket"
 	structs "user-onboarding/struct"
+	requestStruct "user-onboarding/struct/request"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -96,7 +97,7 @@ func FetchUser(ctx context.Context, request *structs.UserDetails, sentryCtx cont
 	return result.Item, err
 }
 
-func UserLogin(ctx context.Context, request *structs.UserDetails, sentryCtx context.Context) error {
+func UserLogin(ctx context.Context, request *requestStruct.UserLogin, sentryCtx context.Context) error {
 	defer sentry.Recover()
 	span := sentry.StartSpan(sentryCtx, "[DAO] Userlogin") //sentry to log db calls
 	defer span.Finish()
