@@ -1,17 +1,24 @@
 package structs
 
+var SourceType = map[int]string{
+	0: "EMAIL",
+	1: "PHONE",
+}
+
+type SignUp struct {
+	CreationSource     string `json:"creationSource" binding:"required"`
+	Password           string `json:"password" binding:"required"`
+	CreationSourceType string `json:"creationSourceType" binding:"required"`
+}
+
 type UserDetails struct {
-	FirstName    string `json:"firstName,omitempty"`
-	LastName     string `json:"lastName,omitempty"`
-	HandleName   string `json:"handlename,omitempty"`
-	Email        string `json:"email,omitempty"`
-	Bio          string `json:"bio,omitempty"`
-	Number       int    `json:"phoneNumber,omitempty"`
-	SocialHandle string `json:"socialHandle,omitempty"`
-	BankDetails  string `json:"bankDetails,omitempty"`
-	Image        string `json:"image,omitempty"`
-	Password     string `json:"password,omitempty"`
-	Resume       string `json:"resume,omitempty"`
-	Pincode      int    `json:"pinCode,omitempty"`
-	Type         int    `json:"type,omitempty"`
+	CreationSource     string `json:"creationSource,omitempty"`
+	CreationSourceType string `json:"creationSourceType" binding:"required"`
+	Password           string `json:"password,omitempty" binding:"required"`
+	Email              string `json:"email,omitempty"`
+	Phone              string `json:"phone,omitempty"`
+	SocialHandles      string `json:"socialHandles,omitempty"`
+	Bio                string `json:"bio,omitempty"`
+	BankDetails        string `json:"bankDetails,omitempty"`
+	Skills             string `json:"skills,omitempty"`
 }

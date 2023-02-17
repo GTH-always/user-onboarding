@@ -1,6 +1,7 @@
 package routes
 
 import (
+	PATCH "user-onboarding/controllers/PATCH"
 	POST "user-onboarding/controllers/POST"
 
 	"github.com/gin-gonic/gin"
@@ -17,5 +18,6 @@ func v1Routes(route *gin.RouterGroup) {
 		v1Routes.POST("/login", POST.UserLogin)
 		v1Routes.POST("/createUser", POST.CreateUser)
 		v1Routes.POST("/fetchUserName", POST.FetchUser)
+		v1Routes.POST("/updateUser", PATCH.UpdateUser)
 	}
 }

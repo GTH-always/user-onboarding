@@ -1,9 +1,8 @@
-package POST
+package PATCH
 
 import (
 	"context"
 	"net/http"
-	"user-onboarding/constants"
 	helpers "user-onboarding/helpers/userAction"
 	structs "user-onboarding/struct"
 	response "user-onboarding/struct/response"
@@ -13,12 +12,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateUser(c *gin.Context) {
+func UpdateUser(c *gin.Context) {
 	defer sentry.Recover()
 	span := sentry.StartSpan(context.TODO(), "[GIN] UserDetails", sentry.TransactionName("Create a new user"))
 	defer span.Finish()
 
-	formRequest := structs.SignUp{}
+	formRequest := structs.UserDetails{}
 
 	if err := c.ShouldBind(&formRequest); err != nil {
 		span.Status = sentry.SpanStatusFailedPrecondition
@@ -29,7 +28,7 @@ func CreateUser(c *gin.Context) {
 	ctx := c.Request.Context()
 	resp := response.SuccessResponse{}
 
-	err := helpers.UserDetails(ctx, &formRequest, span.Context()) //the DAO level
+	err := helpers.UpdateUserDetails(ctx, &formRequest, span.Context()) //the DAO level
 	if err != nil {
 		resp.Status = "Failed"
 		resp.Message = err.Error()
@@ -37,17 +36,8 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	token, tokenerror := utils.GenerateToken()
-
-	if tokenerror != nil {
-		resp.Status = constants.API_FAILED_STATUS
-		resp.Message = "User Created,Please login"
-		c.JSON(http.StatusInternalServerError, resp)
-		return
-	}
 	resp.Status = "Success"
-	resp.Message = "User created successfully"
-	resp.Token = token
+	resp.Message = "User details updated successfully"
 	span.Status = sentry.SpanStatusOK
 
 	c.JSON(http.StatusOK, resp)
