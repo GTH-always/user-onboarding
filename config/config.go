@@ -43,6 +43,7 @@ type Config struct {
 	YoutubeKey           string
 	Index                string
 	Location             string
+	Token                string
 }
 
 var config Config
@@ -107,6 +108,7 @@ func init() {
 	config.Bucket = os.Getenv("Bucket")
 	config.Table = os.Getenv("Table")
 	config.Location = os.Getenv("Location")
+	config.Token = os.Getenv("Token")
 	YoutubeKey = os.Getenv("YoutubeKey")
 	YoutubeKeyList = strings.Split(YoutubeKey, ",")
 	UpdateKey()
