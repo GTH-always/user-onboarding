@@ -71,8 +71,10 @@ func init() {
 		break
 	}
 	fmt.Println("reading env from: ", configFilePath)
-
 	e := godotenv.Load(configFilePath)
+	if appEnv == "aws" {
+		e = godotenv.Load()
+	}
 	if e != nil {
 		fmt.Println("error loading env: ", e)
 		panic(e.Error())
