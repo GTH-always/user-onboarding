@@ -60,22 +60,9 @@ func init() {
 		appEnv = "dev"
 	}
 
-	configFilePath := ".env"
-
-	switch appEnv {
-	case "production":
-		configFilePath = "./config/.env.prod"
-		break
-	case "stage":
-		configFilePath = "./config/.env.stage"
-		break
-	}
-	fmt.Println("reading env from: ", configFilePath)
 	var e error
 	if appEnv == "aws" {
 		e = godotenv.Load()
-	} else {
-		e = godotenv.Load(configFilePath)
 	}
 	if e != nil {
 		fmt.Println("error loading env: ", e)
