@@ -47,7 +47,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 	resp.Status = "Success"
-	resp.Message = "User created successfully"
+	resp.Message = "User data verified successfully"
 	resp.Token = token
 	span.Status = sentry.SpanStatusOK
 
